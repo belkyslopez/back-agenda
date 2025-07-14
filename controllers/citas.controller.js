@@ -14,7 +14,9 @@ exports.crearCita = async (req, res) => {
 };
 
 // Eliminar una cita
-exports.eliminarCita = async (req, res) => {
+ exports.eliminarCita = async (req, res) => {
     await Cita.findByIdAndDelete(req.params.id);
     res.json({ message: 'Cita eliminada' });
-};
+ };
+
+

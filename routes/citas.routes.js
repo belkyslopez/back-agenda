@@ -4,10 +4,9 @@ const citasController = require('../controllers/citas.controller');
 const Cita = require('../models/cita');
 
 // Endpoints
-router.get('/', citasController.obtenerCitas);
-//router.post('/', citasController.crearCita);
 
-// POST /api/citas
+router.get('/', citasController.obtenerCitas);
+router.delete('/:id', citasController.eliminarCita);
 router.post('/', async (req, res) => {
   try {
     const cita = new Cita(req.body);
@@ -17,7 +16,5 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Error al guardar la cita', detalle: error.message });
   }
 });
-
-router.delete('/:id', citasController.eliminarCita);
 
 module.exports = router;

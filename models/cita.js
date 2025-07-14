@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 
 const citaSchema = new mongoose.Schema({
-    servicio: { type: String, required: true },
-    cliente: { type: String, required: true },
-    fecha: { type: String, required: true },
-    hora: { type: String, required: true }
+    cliente: String,
+    telefono: String,
+    fecha: Date,
+    hora: String,
+    servicio: {
+    nombre: String,
+    categoria: String
+  }
 });
 
 module.exports = mongoose.model('Cita', citaSchema);

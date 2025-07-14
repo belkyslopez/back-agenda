@@ -21,8 +21,11 @@ mongoose.connect('mongodb://localhost:27017/agenda', {
 
 const citasRoutes = require('./routes/citas.routes');
 const serviciosRoutes = require('./routes/servicios.routes');
+const categoriasRoutes = require('./routes/categorias.routes');
+
 app.use('/api/citas', citasRoutes);
-app.use('/servicios',serviciosRoutes);
+app.use('/api/servicios',serviciosRoutes);
+app.use('/api/categorias',categoriasRoutes);
 
 // Levantar servidor
 app.listen(PORT, () => {
