@@ -4,8 +4,7 @@ const citasController = require('../controllers/citas.controller');
 const Cita = require('../models/cita');
 
 // Endpoints
-
-router.get('/', citasController.obtenerCitas);
+router.get('/servicios/:servicioId', citasController.getCitasPorServicio);
 router.delete('/:id', citasController.eliminarCita);
 router.post('/', async (req, res) => {
   try {

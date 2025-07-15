@@ -7,22 +7,17 @@ exports.getServiciosPorCategoria = async (req, res) => {
     console.log("entro a getServiciosPorCategoria");
   try {
     const { categoriaId } = req.params;
-
     // Validación: verificar que el ID sea un ObjectId válido
     if (!mongoose.Types.ObjectId.isValid(categoriaId)) {
       return res.status(400).json({ error: '⚠️ ID de categoría no válido' });
     }
-
     // Buscar servicios asociados a esa categoría
     const servicios = await Servicio.find({ categoria: categoriaId }).populate('categoria');
     console.log("servicios", servicios);
-
     if (!servicios || servicios.length === 0) {
       return res.status(200).json({ msg: 'ℹ️ No se encontraron servicios para esta categoría',servicios });
     }
-
     res.status(200).json(servicios);
-
   } catch (err) {
     res.status(500).json({ 
         error: '❌ Error al obtener servicios por categoría', detalle: err.message });
