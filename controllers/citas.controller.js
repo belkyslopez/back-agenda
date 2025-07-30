@@ -9,7 +9,6 @@ exports.obtenerCitas = async (req, res) => {
 
 // Obtener todos las citas por servicio
 exports.getCitasPorServicio = async (req, res) => {
-    console.log(" 📌 entró a getCitasPorServicio");
   try {
     const { servicioId } = req.params;
     // Validación: verificar que el ID sea un ObjectId válido
@@ -18,7 +17,6 @@ exports.getCitasPorServicio = async (req, res) => {
     }
     // Buscar citas asociadas a ese servicio
     const citas = await Cita.find({ servicio: servicioId }).populate('servicio');
-    console.log("citas", citas);
     if (!citas || citas.length === 0) {
       return res.status(200).json({ msg: 'ℹ️ No se encontraron citas para este servicio',citas });
     }
@@ -29,11 +27,15 @@ exports.getCitasPorServicio = async (req, res) => {
   }
 };
 
-// Crear una cita
+// Crear una cita y asociarlo a un servicio
 exports.crearCita = async (req, res) => {
+  try {
     const nuevaCita = new Cita(req.body);
     await nuevaCita.save();
-    res.json(nuevaCita);
+    res.status(201).json({ msg: '✅ la Cita fue creada correctamente', Cita: nuevaCita });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al crear la cita', detalle: err.message });
+  }
 };
 
 // Eliminar una cita

@@ -4,7 +4,6 @@ const Servicio = require('../models/servicio');
 
 // Obtener todos los servicios por categoría
 exports.getServiciosPorCategoria = async (req, res) => {
-    console.log("entro a getServiciosPorCategoria");
   try {
     const { categoriaId } = req.params;
     // Validación: verificar que el ID sea un ObjectId válido
@@ -13,7 +12,6 @@ exports.getServiciosPorCategoria = async (req, res) => {
     }
     // Buscar servicios asociados a esa categoría
     const servicios = await Servicio.find({ categoria: categoriaId }).populate('categoria');
-    console.log("servicios", servicios);
     if (!servicios || servicios.length === 0) {
       return res.status(200).json({ msg: 'ℹ️ No se encontraron servicios para esta categoría',servicios });
     }
