@@ -24,11 +24,13 @@ const citasRoutes = require('./routes/citas.routes');
 const serviciosRoutes = require('./routes/servicios.routes');
 const categoriasRoutes = require('./routes/categorias.routes');
 const horariosRoutes = require('./routes/horarios.routes');
+const usuariosRoutes = require('./routes/usuarios.routes');
 
 app.use('/api/citas', citasRoutes);
 app.use('/api/servicios', serviciosRoutes);
 app.use('/api/categorias', categoriasRoutes);
 app.use('/api/horarios', horariosRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
 // Levantar servidor
 app.listen(PORT, () => {
