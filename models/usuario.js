@@ -6,6 +6,7 @@ const usuarioSchema = new mongoose.Schema({
   correo: String,
   telefono: String,
   password: String,
+  rut: { type: String, required: true, unique: true },
   rol: {
     type: String,
     enum: ['admin', 'cliente', 'profesional'],

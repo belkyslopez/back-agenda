@@ -18,6 +18,36 @@ exports.obtenerCitasxUsuario = async (req, res) => {
   }
 };
 
+const getCitasPorMesYProfesional = async (req, res) => {
+  try {
+    const { profesionalId, mes, anio } = req.query;
+
+    if (!profesionalId || !mes || !anio) {
+      return res.status(400).json({ error: 'Faltan parámetros requeridos' });
+    }
+
+    const mesInt = parseInt(mes);
+    const anioInt = parseInt(anio);
+
+    // Construimos el rango de fechas para ese mes
+    const fechaInicio = new Date(anioInt, mesInt - 1, 1);
+    const fechaFin = new Date(anioInt, mesInt, 0, 23, 59, 59); // último día del mes
+
+    const citas = await Cita.find({
+      profesional: profesionalId,
+      fecha: {
+        $gte: fechaInicio,
+        $lte: fechaFin
+      }
+    });
+
+    res.json(citas);
+  } catch (error) {
+    console.error('Error al obtener citas por profesional y mes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 // exports.obtenerCitas = async (req, res) => {
 //   try {
 //     const { usuario_ID, fecha, hora } = req.body;
