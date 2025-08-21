@@ -4,6 +4,7 @@ const usuariosController = require('../controllers/usuarios.controller');
 
 // Endpoints
 router.get('/', usuariosController.obtenerUsuarios);
-router.get('/:rut', usuariosController.obtenerUsuarioPorRut);
+router.post('/buscar', usuariosController.obtenerUsuarioPorRut);
+router.post('/', usuariosController.crearUsuario);
 
 module.exports = router;
