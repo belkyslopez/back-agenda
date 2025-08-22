@@ -18,28 +18,21 @@ exports.obtenerCitasxUsuario = async (req, res) => {
   }
 };
 
-const getCitasPorMesYProfesional = async (req, res) => {
+exports.getCitasPorMesYProfesional = async (req, res) => {
   try {
-    const { profesionalId, mes, anio } = req.query;
-
+    const { profesionalId, mes, anio } = req.params;
     if (!profesionalId || !mes || !anio) {
       return res.status(400).json({ error: 'Faltan parámetros requeridos' });
     }
-
     const mesInt = parseInt(mes);
     const anioInt = parseInt(anio);
-
     // Construimos el rango de fechas para ese mes
     const fechaInicio = new Date(anioInt, mesInt - 1, 1);
     const fechaFin = new Date(anioInt, mesInt, 0, 23, 59, 59); // último día del mes
-
     const citas = await Cita.find({
-      profesional: profesionalId,
-      fecha: {
-        $gte: fechaInicio,
-        $lte: fechaFin
-      }
-    });
+      profesional_ID: profesionalId,
+      fecha: { $gte: fechaInicio, $lte: fechaFin },
+    }).populate('usuario_ID')
 
     res.json(citas);
   } catch (error) {
@@ -47,44 +40,6 @@ const getCitasPorMesYProfesional = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
-// exports.obtenerCitas = async (req, res) => {
-//   try {
-//     const { usuario_ID, fecha, hora } = req.body;
-//      if (!usuario_ID) {
-//       return res.status(400).json({ error: 'Falta el ID del usuario' });
-//     }
-//     const filtro = {};
-//     const citas = await Cita.find(filtro)
-//       .populate('usuario_ID')
-//       .populate('profesional_ID')
-//       .populate('servicio_ID');
-//     res.status(200).json(citas);
-//   } catch (err) {
-//     res.status(500).json({ error: 'Error al obtener las citas', detalle: err.message });
-//   }
-// };
-
-
-// Obtener todos las citas por servicio
-// exports.getCitasPorServicio = async (req, res) => {
-//   try {
-//     const { servicioId } = req.params;
-//     // Validación: verificar que el ID sea un ObjectId válido
-//     if (!mongoose.Types.ObjectId.isValid(servicioId)) {
-//       return res.status(400).json({ error: '⚠️ ID del servicio no válido' });
-//     }
-//     // Buscar citas asociadas a ese servicio
-//     const citas = await Cita.find({ servicio: servicioId }).populate('servicio');
-//     if (!citas || citas.length === 0) {
-//       return res.status(200).json({ msg: 'ℹ️ No se encontraron citas para este servicio',citas });
-//     }
-//     res.status(200).json(citas);
-//   } catch (err) {
-//     res.status(500).json({ 
-//         error: '❌ Error al obtener citas por servicio', detalle: err.message });
-//   }
-// };
 
 exports.crearCita = async (req, res) => {
   try {

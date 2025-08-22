@@ -6,5 +6,6 @@ const citasController = require('../controllers/citas.controller');
 router.get('/usuario/:id', citasController.obtenerCitasxUsuario);
 router.delete('/:id', citasController.eliminarCita);
 router.post('/', citasController.crearCita);
+router.get('/:profesionalId/:mes/:anio', citasController.getCitasPorMesYProfesional);
 
 module.exports = router;
