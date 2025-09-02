@@ -1,5 +1,5 @@
 const Cita = require('../models/cita');
-const Horario = require('../models/horario');
+const Horas = require('../models/horas');
 
 //Obtener todas las citas x usuario
 exports.obtenerCitasxUsuario = async (req, res) => {
@@ -45,7 +45,7 @@ exports.crearCita = async (req, res) => {
   try {
     const { servicio_ID, profesional_ID, usuario_ID, fecha, hora } = req.body;
     // 1. Marcar el horario como no disponible
-    await Horario.findOneAndUpdate(
+    await Horas.findOneAndUpdate(
       { fecha, hora_inicio: hora },
       { disponible: false }
     );

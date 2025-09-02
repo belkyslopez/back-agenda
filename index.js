@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const PORT = 3000;
-const dayjs = require('dayjs');
-const { v4: uuid } = require('uuid');
 
 // Middleware
 app.use(express.json());
@@ -23,13 +21,15 @@ mongoose.connect('mongodb://localhost:27017/agenda', {
 const citasRoutes = require('./routes/citas.routes');
 const serviciosRoutes = require('./routes/servicios.routes');
 const categoriasRoutes = require('./routes/categorias.routes');
-const horariosRoutes = require('./routes/horarios.routes');
+const horasRoutes = require('./routes/horas.routes');
+const agendaRoutes = require('./routes/agenda.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 
 app.use('/api/citas', citasRoutes);
 app.use('/api/servicios', serviciosRoutes);
 app.use('/api/categorias', categoriasRoutes);
-app.use('/api/horarios', horariosRoutes);
+app.use('/api/horas', horasRoutes);
+app.use('/api/agenda', agendaRoutes);
 app.use('/api/usuarios', usuariosRoutes);
 
 // Levantar servidor

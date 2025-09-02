@@ -22,7 +22,28 @@ exports.getServiciosPorCategoria = async (req, res) => {
   }
 };
 
-// Crear un servicio y asociarlo a una categoría
+
+// Obtener todos los servicios por profesional
+exports.getServiciosPorProfesional = async (req, res) => {
+  try {
+    const { profesionalId } = req.params;
+    // Validación: verificar que el ID sea un ObjectId válido
+    if (!mongoose.Types.ObjectId.isValid(profesionalId)) {
+      return res.status(400).json({ error: '⚠️ ID del profesional no es válido' });
+    }
+    // Buscar servicios asociados al profesional
+    const servicios = await Servicio.find({ profesional: profesionalId }).populate('usuario');
+    if (!servicios || servicios.length === 0) {
+      return res.status(200).json({ msg: 'ℹ️ No se encontraron servicios para este profesional', servicios });
+    }
+    res.status(200).json(servicios);
+  } catch (err) {
+    res.status(500).json({ 
+        error: '❌ Error al obtener servicios por categoría', detalle: err.message });
+  }
+};
+
+// Crear un servicio 
 exports.crearServicio = async (req, res) => {
   try {
     const nuevoServicio = new Servicio(req.body);

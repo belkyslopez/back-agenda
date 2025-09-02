@@ -11,6 +11,11 @@ const usuarioSchema = new mongoose.Schema({
     type: String,
     enum: ['admin', 'cliente', 'profesional'],
     required: true
+  },
+  agenda: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Agenda',
+    required: true
   }
 });
 
